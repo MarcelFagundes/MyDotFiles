@@ -7,7 +7,7 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 (setq user-full-name "Marcel Fagundes"
-       user-mail-address "marcelfagundes@hotmail.com")
+      user-mail-address "marcelfagundes@hotmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -74,3 +74,13 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+;;(setq flycheck-gcc-language-standardd c++20")
+(after! eglot
+  (setq-default eglot-workspace-configuration
+                '((:clangd . (:clang-tidy "true")))))
+
+(after! eglot
+  (add-to-list 'eglot-server-programs
+               '((c++-mode c-mode) . ("clangd" "-std=c++20")))
+  (setq-default eglot-workspace-configuration
+                '((:clangd . (:completion (:detailedLabel t))))))
