@@ -62,10 +62,9 @@ set $browser microsoft-edge-stable
 # kill focused window
 bindsym $mod+F4 kill
 
-# start dmenu (a program launcher)
 # bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-8' -p 'dmenu%'"
-#bindsym $mod+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'Iosevka-8' -p 'dmenu%'"
+#bindsym $mod+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-8' -p 'dmenu%'"
+bindsym $mod+d exec "dmenu_run -nf '#FDD017' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'Iosevka-12' -p 'dmenu%'"
 
 
 # A more modern dmenu replacement is rofi:
@@ -170,6 +169,25 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
+set $mode_system System (e) logout, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    # bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"        
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+y mode "$mode_system"
+
+# Bloquear a tela com Ctrl + Alt + l (l de lock).
+bindsym Control+Mod1+l exec "i3lock -c 282A36"
+# Bloqueio de tela automático
+exec "xautolock -detectsleep -time 10 -locker \"i3lock -c 282A36\""
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -195,10 +213,7 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-# Bloquear a tela com Ctrl + Alt + l (l de lock).
-bindsym Control+Mod1+l exec "i3lock -c 282A36"
-# Bloqueio de tela automático
-exec "xautolock -detectsleep -time 10 -locker \"i3lock -c 282A36\""
+
 
 # Resize
 bindsym $mod+r mode "resize"
